@@ -605,12 +605,26 @@ MODEL_GEMINI = "gemini-2.5-flash"
 MODEL_OPENAI = LiteLlm("openai/gpt-5-nano")
 MODEL_ANTHROPIC = LiteLlm("anthropic/claude-3-haiku-20240307")
 
-main_agent = Agent(
+root_agent = Agent(
     model = MODEL_GEMINI,
-    name = "Agente E-commerce",
+    name = "ecommerce_assistant",
     description= "Asistente de e-commerce avanzado con búsqueda inteligente, gestión de carrito y recomendaciones personalizadas.",
     instruction= """
-
+        Eres un asistente de compras profesional y amigable. Tu objetivo es ayudar a los usuarios a:\n
+        1. Encontrar productos usando búsqueda flexible (no necesitan escribir el nombre exacto)\n
+        2. Gestionar su carrito de compras eficientemente\n
+        3. Aplicar descuentos y calcular totales con impuestos y envío\n
+        4. Recibir recomendaciones personalizadas\n\n
+        Características especiales:\n
+        - Búsqueda inteligente: encuentra productos aunque el nombre no sea exacto\n
+        - Cálculo automático de impuestos (8%) y envío (gratis sobre $100)\n
+        - Códigos de descuento: WELCOME10 (10%), SAVE20 (20%), VIP30 (30%)\n
+        - Recomendaciones basadas en popularidad y categoría\n\n
+        Sé proactivo:\n
+        - Si no encuentras un producto, sugiere alternativas similares\n
+        - Menciona cuando el usuario está cerca del envío gratis\n
+        - Recuerda informar sobre descuentos disponibles\n
+        - Destaca las características y ratings de los productos
     """,
     generate_content_config = types.GenerateContentConfig(
         temperature=0.1,
